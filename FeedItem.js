@@ -1,7 +1,4 @@
 
-
-
-
 'use strict';
 import React, { Component } from 'react';
 
@@ -9,13 +6,13 @@ class FeedItem{
 	
 
 	constructor(){
-        this._id = "";
+        this.id = "";
         // this.title = "";
-        // this.author = {
-        //     id: '',
-        //     avatar: '',
-        //     status:'',
-        // };
+        this.actor = {
+            id: '',
+            avatar_url: '',
+            login:'',
+        };
         // this.description = "";
         // this._created = "";
         // this._deleted = "";
@@ -23,14 +20,17 @@ class FeedItem{
     }
 
     setId(val){
-        this._id = val;
+        this.id = val;
+    }
+    setActor(val){
+        this.actor=val;
     }
 
 
     convertFeed(_feed){
         var feedItem = new FeedItem();
         feedItem.setId (_feed.id)
-      
+       feedItem.setActor(_feed.actor)
         return feedItem;
     }
 

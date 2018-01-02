@@ -5,25 +5,29 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
+  ActivityIndicator,
   ListView
 } from 'react-native';
 
 var buffer = require('buffer');
-let ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => {
-        return (!isEqual(r1, r2))
-    }
-});
 
-//var FeedItem11 = require('./FeedItem');
+
+var FeedItem = require('./FeedItem');
 
 class Feed extends Component {
 
 	constructor(props){
 		super(props);
 		
+		let ds = new ListView.DataSource({
+		    rowHasChanged: (r1, r2) => {
+		        return (!isEqual(r1, r2))
+		    }
+		});
+
 		this.state = {
-			data: ['a'],
+			data: ds,
+			showProgress: true
 		};
 	}
 
@@ -44,34 +48,46 @@ class Feed extends Component {
 			.then((responseData) => {
 				var feedItems = 
 					responseData.filter((ev)=> ev.type == 'PushEvent');
-				//var feedModels = FeedItem11.convertFeedList(feedItems);
+				var feedModels = FeedItem.convertFeedList(feedItems);
 				this.setState({
-					data: feedItems
+					data: this.state.data.cloneWithRows(feedModels),
+					showProgress: false
 				});
 			})
 		});
 	}
 
 	renderRow(rowData){
+		
+
 		return (
 			<Text style={{
 				color: '#333',
 				backgroundColor: '#fff',
 				alignSelf: 'center'
 			}}>
-				{rowData.id}
+				{rowData.actor.login}
 			</Text>
 			);
 	}
 
 	render(){
+		if(this.state.showProgress){
+			return (
+				<View style={{flex: 1, justifyContent: 'center'}}>
+					<ActivityIndicator 
+						size='large'
+						animating={true} />
+				</View>
+				);
+		}
 		return(
 			<View style={{
 				flex: 1,
 				justifyContent: 'flex-start'
 			}}>
 				<ListView
-					dataSource={ds.cloneWithRows(this.state.data)}
+					dataSource={this.state.data}
 					renderRow={this.renderRow.bind(this)} />
 			</View>
 		);
