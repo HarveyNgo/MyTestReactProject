@@ -5,14 +5,18 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
+  Image,
   ActivityIndicator,
-  ListView
+  ListView,
+  TouchableHighLight
 } from 'react-native';
 
 var buffer = require('buffer');
 
 
 var FeedItem = require('./FeedItem');
+var moment = require('moment')
+var PushPayload = require('./PushPayload')
 
 class Feed extends Component {
 
@@ -57,17 +61,53 @@ class Feed extends Component {
 		});
 	}
 
+	pressRow(rowData){
+		// this.props.navigator.push({
+		// 	title: "PushEvent",
+		// 	component: PushPayload,
+		// 	passProps:{
+		// 		pushEvent: rowData 
+		// 	}
+		// });
+	}
 	renderRow(rowData){
 		
 
 		return (
-			<Text style={{
-				color: '#333',
-				backgroundColor: '#fff',
-				alignSelf: 'center'
-			}}>
-				{rowData.actor.login}
-			</Text>
+			
+
+				<View style={{flex: 1,
+					flexDirection: 'row',
+					padding: 20,
+					alignItems:'center',
+					borderColor: '#d7d7d7',
+					borderBottomWidth: 1
+					}}>
+						<Image 
+							source={{uri: rowData.actor.avatar_url}}
+							style={{
+								height: 36,
+								width: 36,
+								borderRadius: 18
+							}} />
+						<View style={{	paddingLeft: 20}} >
+							<Text style={{backgroundColor: '#fff'}}>
+								{moment(rowData.created_at).fromNow()}
+							</Text>
+							<Text style={{backgroundColor: '#fff'}}>
+								{rowData.actor.login} push to
+							</Text>
+							<Text style={{backgroundColor: '#fff'}}>
+								{rowData.payload.ref.replace('refs/heads/','')}
+							</Text>
+							<Text style={{backgroundColor: '#fff'}}>
+								at <Text style={{ fontWeight: '600' }}>
+										{rowData.repo.name}
+									</Text>
+							</Text>
+						</View>
+					</View>
+				
 			);
 	}
 
@@ -85,7 +125,7 @@ class Feed extends Component {
 			<View style={{
 				flex: 1,
 				justifyContent: 'flex-start'
-			}}>
+				}}>
 				<ListView
 					dataSource={this.state.data}
 					renderRow={this.renderRow.bind(this)} />

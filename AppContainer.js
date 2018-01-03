@@ -5,8 +5,9 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
-  TabBarIOS
+  StyleSheet,	
+  TabBarIOS,
+  NavigatorIOS
 } from 'react-native';
 
 var Feed = require('./Feed');
@@ -29,6 +30,7 @@ class AppContainer extends Component {
 					icon={require('./inbox.png')}
 					onPress={()=> this.setState({selectedTab: 'feed'})}>
 					<Feed />
+									
 				</TabBarIOS.Item>	
 				<TabBarIOS.Item
 					title='Search'

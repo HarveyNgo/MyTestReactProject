@@ -7,16 +7,16 @@ class FeedItem{
 
 	constructor(){
         this.id = "";
-        // this.title = "";
+        this.created_at = "";
         this.actor = {
             id: '',
             avatar_url: '',
             login:'',
         };
-        // this.description = "";
-        // this._created = "";
-        // this._deleted = "";
-        // this._updated = "";
+         this.payload ={
+         };
+         this.repo ={
+         };
     }
 
     setId(val){
@@ -26,11 +26,24 @@ class FeedItem{
         this.actor=val;
     }
 
+    setCreateAt(val){
+        this.created_at=val;
+    }
+
+    setPayload(val){
+        this.payload=val;
+    }
+    setRepo(val){
+        this.repo=val;
+    }
 
     convertFeed(_feed){
         var feedItem = new FeedItem();
         feedItem.setId (_feed.id)
-       feedItem.setActor(_feed.actor)
+        feedItem.setActor(_feed.actor)
+        feedItem.setCreateAt(_feed.created_at)
+        feedItem.setPayload(_feed.payload)
+        feedItem.setRepo(_feed.repo)
         return feedItem;
     }
 
