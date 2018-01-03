@@ -60,7 +60,7 @@ export default class App extends Component<{}> {
       return (
         <Login onLogin={() => {this.onLogin()}} />
       );
-    }
+    } 
   }
 
   onLogin(){
