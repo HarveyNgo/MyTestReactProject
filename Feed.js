@@ -8,7 +8,7 @@ import {
   Image,
   ActivityIndicator,
   ListView,
-  TouchableHighLight
+  TouchableHighlight
 } from 'react-native';
 
 var buffer = require('buffer');
@@ -62,19 +62,21 @@ class Feed extends Component {
 	}
 
 	pressRow(rowData){
-		// this.props.navigator.push({
-		// 	title: "PushEvent",
-		// 	component: PushPayload,
-		// 	passProps:{
-		// 		pushEvent: rowData 
-		// 	}
-		// });
+		this.props.navigator.push({
+			title: "PushEvent",
+			component: PushPayload,
+			passProps:{
+				pushEvent: rowData 
+			}
+		});
 	}
 	renderRow(rowData){
 		
 
 		return (
-			
+			<TouchableHighlight
+				onPress={() => this.pressRow(rowData)}
+				underLayColor='#dd'>
 
 				<View style={{flex: 1,
 					flexDirection: 'row',
@@ -107,7 +109,7 @@ class Feed extends Component {
 							</Text>
 						</View>
 					</View>
-				
+				</TouchableHighlight>
 			);
 	}
 

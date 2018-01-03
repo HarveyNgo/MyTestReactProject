@@ -29,8 +29,9 @@ class AppContainer extends Component {
 					selected={this.state.selectedTab == 'feed'}
 					icon={require('./inbox.png')}
 					onPress={()=> this.setState({selectedTab: 'feed'})}>
-					<Feed />
-									
+						<NavigatorIOS 
+							style={{flex: 1}}
+							initialRoute={{component: Feed, title: 'Feed' }} />					
 				</TabBarIOS.Item>	
 				<TabBarIOS.Item
 					title='Search'
